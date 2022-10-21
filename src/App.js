@@ -1,10 +1,61 @@
-import './App.css';
-import Form from './components/Form'
+import { Formik, Form, Field } from "formik";
+import { passwordSchema } from "./validations/PasswordChange";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <Form />
+      <Formik
+        initialValues={{
+          oldPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        }}
+        validationSchema={passwordSchema}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+      >
+        {({ errors, touched }) => (
+          <div>
+            <Form className="Form">
+              <div className="title">Change password</div>
+              <div className="inputs">
+                <Field
+                  type="password"
+                  name="oldPassword"
+                  placeholder="Enter your old password"
+                  autoComplete="off"
+                />
+                {errors.oldPassword && touched.oldPassword ? (
+                  <div className="error">{errors.oldPassword}</div>
+                ) : null}
+                <Field
+                  type="password"
+                  name="newPassword"
+                  placeholder="Enter your new password"
+                  autoComplete="off"
+                />
+                {errors.newPassword && touched.newPassword ? (
+                  <div className="error">{errors.newPassword}</div>
+                ) : null}
+
+                <Field
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  autoComplete="off"
+                />
+                {errors.confirmPassword && touched.confirmPassword ? (
+                  <div className="error">{errors.confirmPassword}</div>
+                ) : null}
+
+                <input type="submit" id="submit" />
+              </div>
+            </Form>
+          </div>
+        )}
+      </Formik>
     </div>
   );
 }
