@@ -16,7 +16,7 @@ function App() {
           console.log(values);
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting, isValidating, isValid }) => (
           <div>
             <Form className="Form">
               <div className="title">Change password</div>
@@ -50,7 +50,11 @@ function App() {
                   <div className="error">{errors.confirmPassword}</div>
                 ) : null}
 
-                <input type="submit" id="submit" />
+                <input
+                  type="submit"
+                  id="submit"
+                  disabled={isSubmitting || isValidating || !isValid}
+                />
               </div>
             </Form>
           </div>
